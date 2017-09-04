@@ -59,6 +59,9 @@ abstract class SimpleContentType implements ContentTypeInterface, ContentTypeExp
         if ($node->hasProperty($property->getName())) {
             $value = $node->getPropertyValue($property->getName());
         }
+        if($value && is_string($value)){
+            $value = $this->cleanupData($value, $property);
+        }
 
         $property->setValue($this->decodeValue($value));
 
@@ -110,8 +113,8 @@ abstract class SimpleContentType implements ContentTypeInterface, ContentTypeExp
      */
     public function __get($property)
     {
-        if (method_exists($this, 'get' . ucfirst($property))) {
-            return $this->{'get' . ucfirst($property)}();
+        if (method_exists($this, 'get'.ucfirst($property))) {
+            return $this->{'get'.ucfirst($property)}();
         } else {
             return;
         }
@@ -199,6 +202,11 @@ abstract class SimpleContentType implements ContentTypeInterface, ContentTypeExp
     ) {
         $property->setValue($value);
         $this->write($node, $property, $userId, $webspaceKey, $languageCode, $segmentKey);
+    }
+
+    public function cleanupData($data,  PropertyInterface $property)
+    {
+        return $data;
     }
 
     /**

@@ -14,6 +14,7 @@ namespace Sulu\Component\Content\Types;
 use Sulu\Component\Content\Compat\PropertyInterface;
 use Sulu\Component\Content\Compat\PropertyParameter;
 use Sulu\Component\Content\SimpleContentType;
+use Sulu\Component\Util\ContentTypeCleanerInterface;
 
 /**
  * ContentType for TextLine.
@@ -22,11 +23,18 @@ class TextLine extends SimpleContentType
 {
     private $template;
 
-    public function __construct($template)
+    public function __construct($template, ContentTypeCleanerInterface $contentTypeCleaner)
     {
         parent::__construct('TextLine', '');
 
         $this->template = $template;
+        $this->contentTypeCleaner = $contentTypeCleaner;
+    }
+
+    public function cleanupData($data, PropertyInterface $property)
+    {
+        #return $data;
+        return $this->contentTypeCleaner->cleanup($data, $property) ;
     }
 
     /**

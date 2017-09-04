@@ -28,6 +28,7 @@
         <parameter key="sulu.cache.warmer.structure.class">Sulu\Bundle\CoreBundle\Cache\StructureWarmer</parameter>
 
         <parameter key="sulu.util.node_helper.class">Sulu\Component\Util\SuluNodeHelper</parameter>
+        <parameter key="sulu.util.content_type_cleaner.class">Sulu\Component\Util\ContentTypeCleaner</parameter>
     </parameters>
 
     <services>
@@ -128,6 +129,7 @@
         <!-- simple content types -->
         <service id="sulu.content.type.text_line" class="%sulu.content.type.text_line.class%">
             <argument>%sulu.content.type.text_line.template%</argument>
+            <argument type="service" id="sulu.util.content_type_cleaner"/>
             <tag name="sulu.content.type" alias="text_line"/>
             <tag name="sulu.content.export" format="1.2.xliff" translate="true" />
         </service>
@@ -182,7 +184,9 @@
             </argument>
             <argument type="service" id="sulu_content.structure.factory"/>
         </service>
+        <service id="sulu.util.content_type_cleaner" class="%sulu.util.content_type_cleaner.class%">
 
+        </service>
         <service id="sulu.content.localization_finder" class="Sulu\Component\Content\Compat\LocalizationFinder">
             <argument type="service" id="sulu_core.webspace.webspace_manager"/>
         </service>

@@ -135,4 +135,12 @@ interface ContentTypeInterface
      * @return array
      */
     public function getContentData(PropertyInterface $property);
+    /**
+     * cleanup data
+     *
+     * @param string $data
+     * @param string $options
+     *
+     * @return string
+     */
 }
